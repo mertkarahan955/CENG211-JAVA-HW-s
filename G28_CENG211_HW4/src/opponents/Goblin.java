@@ -2,13 +2,11 @@ package opponents;
 
 public class Goblin extends Opponent{
 	
-	public Goblin() {
-		super();
-		opponentId = 1;
-	}
 	public Goblin(int opponentId) {
-		this.opponentId = opponentId;
+		super(opponentId);
+		
 	}
+	
 	@Override
 	public void specialAction() {
 		// it gets next turn immediately and attacks two times and both attacks dealts newAttackForTwice

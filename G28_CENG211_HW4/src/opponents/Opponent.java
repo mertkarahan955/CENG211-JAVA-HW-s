@@ -2,28 +2,25 @@ package opponents;
 
 import java.util.Random;
 
+import app.GamePlayers;
 import human_characters.Human;
 
-public abstract class Opponent {
+public abstract class Opponent implements GamePlayers {
 	int opponentId;
 	int tempId = 0;
 	protected double points;
 	protected double attack;
 	protected double speed;
 	Random random = new Random();
-	public Opponent() {
-		
+	public Opponent() {}
+	public Opponent(int opponentId) {
+		this.opponentId = opponentId;
 		points = random.nextInt(50, 151);
 		attack = random.nextInt(5, 25);
 		speed = random.nextInt(1,90);
-//		initializeOpponentId();
+
 	}
-//	private void initializeOpponentId() {
-//		int opponentAmount =4;
-//		while((random.nextInt(opponentAmount) + 1) != tempId) {
-//			opponentId = (random.nextInt(opponentAmount) + 1);
-//		}		
-//	}
+
 	public  double attack(int randomAttackId, Human[] human) {
 		attack = human[randomAttackId].getAttack();
 		return attack;
@@ -40,6 +37,9 @@ public abstract class Opponent {
 	
 	public int getOpponentId() {
 		return opponentId;
+	}
+	public String getName() {
+	    return "" + opponentId;
 	}
 
 	public double getPoints() {

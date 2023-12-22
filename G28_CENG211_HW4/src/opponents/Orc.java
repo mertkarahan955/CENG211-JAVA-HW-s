@@ -2,13 +2,11 @@ package opponents;
 
 public class Orc extends Opponent{
 
-	public Orc() {
-		super();
-		opponentId =2;
-		}
 	public Orc(int opponentId) {
-		this.opponentId = opponentId;
-	}
+		super(opponentId);
+		
+		}
+	
 	public void specialAction() {
 		// double attack for once then give its turn. 
 		attack *= attack;

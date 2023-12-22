@@ -2,13 +2,11 @@ package opponents;
 
 public class Slime extends Opponent{
 
-	public Slime() {
-		super();
-		opponentId = 3;
-	}
 	public Slime(int opponentId) {
-		this.opponentId = opponentId;
+		super(opponentId);
+		
 	}
+	
 	@Override
 	public void specialAction() {
 		double pointAfterAbsorb = getAttack();

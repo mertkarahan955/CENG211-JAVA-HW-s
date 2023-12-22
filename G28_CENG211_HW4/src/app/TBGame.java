@@ -1,10 +1,17 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.UnaryOperator;
 
 import human_characters.Human;
 import human_characters.Knight;
@@ -18,9 +25,15 @@ import opponents.Slime;
 import opponents.Wolf;
 
 public class TBGame {
+	Initializer init = new Initializer();
+	
+	
+	
 	public static void main(String[] args) {
 		TBGame app = new TBGame();
 		TBGame.Menu menu = app.new Menu();
+		TBGame.TurnOrder order = app.new TurnOrder();
+		
 	}
 	Scanner scanner = new Scanner(System.in);
 	// initialize opponents  +
@@ -30,9 +43,10 @@ public class TBGame {
 	// add character(s) to arraylist + 
 	// print the character info from list + 
 	
-	// create a queue that has opponents and characters for play turn
-	// turnOrder Queue. Order is determined according to speed stat.
-	// finish the turn and take it to tail of queue
+	// create a queue that has opponents and characters for play turn + 
+	// turnOrder Queue. Order is determined according to speed stat. +
+	// make the attack attribute
+	// finish the turn and take it to tail of queue + 
 	// if special action occures queue might change.
 	// remove who has 0 or less points.
 	
@@ -77,6 +91,7 @@ public class TBGame {
 		}
 
 
+
 		
 		private void initializeChars() {
 	        ID_GENERATOR.set(0); // Reset the ID_GENERATOR before generating characters
@@ -119,16 +134,15 @@ public class TBGame {
 			displayMenu();
 			
 		}
-		
-		Initializer init = new Initializer();
-		
+
 		private void displayMenu() {
 			System.out.println("Welcome to TBGame");
 			opponentInfo();
-			init.createAndAddToOpponentList();
 			init.initializeChars();
 			charsInfo();
 			System.out.println("The battle starts");
+			
+			
 			
 
 		}
@@ -149,6 +163,65 @@ public class TBGame {
 		private void arrayListSizeChecker() {
 		// check the size of the lists if one of them is empty: exit 	
 		}
+		
+	}
+	private class TurnOrder{
+		Queue<GamePlayers> playersQueue = new LinkedList<>();
+		List<GamePlayers> playersList = new LinkedList<>();
+		
+		
+		public TurnOrder() {
+			
+			addOpponentsToPlayerList();
+			addCharsToPlayerList();
+			sortPlayersList();
+			displayTurnQueue();
+			
+		}
+		
+		public void addOpponentsToPlayerList() {
+		    // Clear the playersList to start fresh
+		    playersList.clear();
+
+		    // Add opponents from the initializer's opponentList
+		    playersList.addAll(init.opponentList);
+		}
+
+		public void addCharsToPlayerList() {
+			playersList.addAll(init.characterList);
+		}
+		public void sortPlayersList() {
+		    // Sort the playersList based on speed in descending order
+		    playersList.sort(Comparator.comparingDouble(GamePlayers::getSpeed).reversed());
+
+		    // Clear the playersQueue before adding sorted players
+		    playersQueue.clear();
+
+		    // Add the sorted players to the playersQueue
+		    playersQueue.addAll(playersList);
+
+		    // Print the sorted playersQueue
+		    
+		}
+
+		public void displayTurnQueue() {
+			System.out.print("Turn Order: ");
+			for (GamePlayers gamePlayer : playersQueue) {
+		        if(gamePlayer instanceof Opponent) {
+		        	Opponent obj = (Opponent) gamePlayer;
+		        	System.out.print("Opponent "+obj.getName() + ", ");
+		        }
+		        else if(gamePlayer instanceof Human) {
+		        	Human obj = (Human) gamePlayer;
+		        	System.out.print(obj.getName() + ", ");
+		        }
+		        
+		    }
+		}
+		public void defaultAttackQueueOrder() {
+			// after player hits going to tail of the queue
+		}
+		
 		
 	}
 }

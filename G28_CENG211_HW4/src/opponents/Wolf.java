@@ -3,15 +3,14 @@ package opponents;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Wolf extends Opponent{
-	
-	public Wolf() {
+	public Wolf(){
 		super();
-		opponentId = 4;
 	}
 	public Wolf(int opponentId) {
+		super(opponentId);
 		
-		this.opponentId = opponentId;
 	}
+	
 	@Override
 	public void specialAction() {
 	}

@@ -7,15 +7,16 @@ import weapon.Sword;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import app.GamePlayers;
 import interfaces.Character;
 
-abstract public class Human<W extends Weapon> implements Character<W>{
+abstract public class Human<W extends Weapon> implements Character<W>, GamePlayers{
 	protected int id;
 	protected String name;
 	private int points; // [100,150]
 	private int stamina; // always start at 10
 	private int attack; // [20,40]
-	private int speed; // [10,99]
+	private double speed; // [10,99]
 	private Weapon weapon;
 	private int specialActionCounter;
 	
@@ -102,9 +103,10 @@ abstract public class Human<W extends Weapon> implements Character<W>{
 	
 	
 
-	public int getName() {
-		return id;
+	public String getName() {
+		return name;
 	}
+	
 
 	public int getPoints() {
 		return points;
@@ -118,7 +120,7 @@ abstract public class Human<W extends Weapon> implements Character<W>{
 		return attack;
 	}
 
-	public int getSpeed() {
+	public double getSpeed() {
 		return speed;
 	}
 
