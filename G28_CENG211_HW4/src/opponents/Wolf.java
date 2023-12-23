@@ -1,5 +1,6 @@
 package opponents;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Wolf extends Opponent{
@@ -15,13 +16,11 @@ public class Wolf extends Opponent{
 	public void specialAction() {
 	}
 	
-	public Wolf specialAction(Opponent[] opponentList) {
+	public void specialAction(ArrayList<Opponent> opponentList) {
 		if(getRandom().nextInt(5) == 0) {
-			return new Wolf();
+			opponentList.add(new Wolf());
 		}
-		else {
-			return null;
-		}
+		
 	}
 	@Override
 	public String toString() {

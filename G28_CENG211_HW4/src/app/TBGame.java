@@ -23,8 +23,10 @@ import opponents.Opponent;
 import opponents.Orc;
 import opponents.Slime;
 import opponents.Wolf;
+import weapon.Weapon;
 
 public class TBGame {
+	Random random = new Random();
 	Initializer init = new Initializer();
 	
 	
@@ -33,6 +35,7 @@ public class TBGame {
 		TBGame app = new TBGame();
 		TBGame.Menu menu = app.new Menu();
 		TBGame.TurnOrder order = app.new TurnOrder();
+		
 		
 	}
 	Scanner scanner = new Scanner(System.in);
@@ -46,7 +49,7 @@ public class TBGame {
 	// create a queue that has opponents and characters for play turn + 
 	// turnOrder Queue. Order is determined according to speed stat. +
 	// make the attack attribute
-	// finish the turn and take it to tail of queue + 
+	// finish the turn and take it to tail of queue 
 	// if special action occures queue might change.
 	// remove who has 0 or less points.
 	
@@ -144,6 +147,9 @@ public class TBGame {
 			
 			
 			
+			
+			
+			
 
 		}
 		private void opponentInfo() {
@@ -163,11 +169,39 @@ public class TBGame {
 		private void arrayListSizeChecker() {
 		// check the size of the lists if one of them is empty: exit 	
 		}
+		private void chooseMoveOption(String chosedOption) {
+			switch (chosedOption) {
+			case "1":
+				
+				break;
+			case "2":
+				break;
+			case "3":
+				break;
+			case "4":
+				break;
+			case "5":
+				break;
+
+			default:
+				break;
+			}
+		}
+		private void displayPossibleTurnOptions() {
+			System.out.println("[1] Punch\n"
+					+ "[2] Attack With Weapon\n"
+					+ "[3] Guard\n"
+					+ "[4] Special Action\n"
+					+ "[5] Run");
+		}
 		
 	}
+	
+	
 	private class TurnOrder{
 		Queue<GamePlayers> playersQueue = new LinkedList<>();
 		List<GamePlayers> playersList = new LinkedList<>();
+		int AttackModifier = 0;
 		
 		
 		public TurnOrder() {
@@ -218,10 +252,130 @@ public class TBGame {
 		        
 		    }
 		}
-		public void defaultAttackQueueOrder() {
-			// after player hits going to tail of the queue
+		public void defaultSendHeadToTail() {
+			// after currentPlayer make move use this method. If there is no special action 
+			GamePlayers currentPlayer = playersQueue.poll();
+			
+			playersQueue.offer(currentPlayer);
 		}
 		
+		public void removeDeadPlayer() {
+			// it must check the dealted player. 
+			for (GamePlayers gamePlayer : playersQueue) {
+				if(gamePlayer.getPoints() <= 0) {
+					playersQueue.remove(gamePlayer);
+				}
+			}
+		}
+		
+		public GamePlayers turnPlayer(Queue<GamePlayers> playersQeueue) {
+			GamePlayers currentPlayer = playersQueue.peek();
+			
+			if(currentPlayer instanceof Opponent) {
+				Opponent currentOpponent = (Opponent) currentPlayer;
+				return currentOpponent;
+			}else {
+				if(currentPlayer instanceof Human) {
+					Human currentHuman = (Human) currentPlayer;
+					return currentHuman;
+				}
+			}
+			return currentPlayer;
+			
+		}
+		
+		public void pickAgainstHuman(Queue<GamePlayers> playersQueue, int opponentId) {
+			if(turnPlayer(playersQueue) instanceof Human) {
+				Human currentPlayer = (Human) turnPlayer(playersQueue);
+			 // check head of queue is human
+			for (GamePlayers gamePlayer : playersQueue) {
+				if(gamePlayer instanceof Opponent) {
+					Opponent pickedOpponent = (Opponent) gamePlayer;
+					if(pickedOpponent.getOpponentId() == opponentId) {
+						
+					}
+				}
+			}
+		}
+		}
+		public Human pickAgainstOpponent(Queue<GamePlayers> playersQueue) {
+			ArrayList<Human> possiblePickHumans = new ArrayList<Human>();
+			for (GamePlayers gamePlayer : playersQueue) {
+				if(gamePlayer instanceof Human) {
+					Human possibleHuman = (Human) gamePlayer;
+					possiblePickHumans.add(possibleHuman);
+				}
+			}
+			Human pickedHuman = chooseRandomHuman(possiblePickHumans);
+			return pickedHuman;
+		}
+		public Human chooseRandomHuman(ArrayList<Human> possiblePickHumans) {
+			int randomIndex= random.nextInt(possiblePickHumans.size());
+			
+			return possiblePickHumans.get(randomIndex);
+		}
+		
+		public void chooseRandomMove(Queue<GamePlayers> playersQeueue) {
+			int randomMoveNumber = random.nextInt(3);
+			if(turnPlayer(playersQeueue) instanceof Opponent) {
+				Opponent currentOpponent = (Opponent) turnPlayer(playersQeueue);
+				switch (randomMoveNumber) {
+				case 0:
+					pickAgainstOpponent(playersQueue).setPoints(currentOpponent.attack(pickAgainstOpponent(playersQueue)));
+					break;
+				case 1:
+					// guard flag
+					break;
+				case 2:
+					// special action
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+//		public void attackModifier(GamePlayers currentPlayer, ArrayList<Opponent> opponentList) {
+//			if(currentPlayer instanceof Opponent) {
+//				
+//				if(currentPlayer instanceof Slime) {
+//					Slime currentSlime = (Slime) currentPlayer;
+//					currentSlime.specialAction();
+//				}
+//				else if(currentPlayer instanceof Goblin) {
+//					Goblin currentGoblin = (Goblin) currentPlayer;
+//					currentGoblin.specialAction();
+//				}
+//				else if(currentPlayer instanceof Orc) {
+//					Orc currentOrc = (Orc) currentPlayer;
+//					currentOrc.specialAction();
+//				}
+//				else if(currentPlayer instanceof Wolf) {
+//					Wolf currentWolf = (Wolf) currentPlayer;
+//					currentWolf.specialAction(opponentList);
+//				}
+//			}
+//			
+//			else if(currentPlayer instanceof Human) {
+//				
+//				if(currentPlayer instanceof Knight) {
+//					Knight currentKnight = (Knight) currentPlayer;
+//					currentKnight.specialAction();
+//				}
+//				else if(currentPlayer instanceof Hunter) {
+//					Hunter currentHunter = (Hunter) currentPlayer;
+//					currentHunter.specialAction();
+//				}
+//				else if(currentPlayer instanceof Squire) {
+//					Squire currentSquire = (Squire) currentPlayer;
+//					currentSquire.specialAction();
+//				}
+//				else if(currentPlayer instanceof Villager) {
+//					Villager currentVillager = (Villager) currentPlayer;
+//					currentVillager.specialAction();
+//				}
+//			}
+//		}
 		
 	}
 }

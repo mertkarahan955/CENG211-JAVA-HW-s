@@ -4,16 +4,19 @@ import weapon.Weapon;
 import weapon.Bow;
 import weapon.Spear;
 import weapon.Sword;
+
+import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import app.GamePlayers;
 import interfaces.Character;
+import opponents.Opponent;
 
 abstract public class Human<W extends Weapon> implements Character<W>, GamePlayers{
 	protected int id;
 	protected String name;
-	private int points; // [100,150]
+	private double points; // [100,150]
 	private int stamina; // always start at 10
 	private int attack; // [20,40]
 	private double speed; // [10,99]
@@ -32,6 +35,7 @@ abstract public class Human<W extends Weapon> implements Character<W>, GamePlaye
 	public Human(String name, int id) {
 		this();
 	}
+	
 	
 	@Override
 	public double punch() {
@@ -102,14 +106,21 @@ abstract public class Human<W extends Weapon> implements Character<W>, GamePlaye
 				}
 	
 	
+	
+	
 
 	public String getName() {
 		return name;
 	}
 	
 
-	public int getPoints() {
+	public double getPoints() {
 		return points;
+	}
+	public double setPoints(double gettedDamage) {
+		points -=gettedDamage;
+		return points;
+		
 	}
 
 	public int getStamina() {

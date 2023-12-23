@@ -21,8 +21,10 @@ public abstract class Opponent implements GamePlayers {
 
 	}
 
-	public  double attack(int randomAttackId, Human[] human) {
-		attack = human[randomAttackId].getAttack();
+	public  double attack(Human human) {
+		attack = human.getAttack();
+		
+		
 		return attack;
 	}  
 	
