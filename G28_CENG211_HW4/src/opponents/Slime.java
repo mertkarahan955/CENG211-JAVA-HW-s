@@ -1,30 +1,34 @@
 package opponents;
 
+import characters.Human;
+import weapon.Weapon;
+
 public class Slime extends Opponent{
 
-	public Slime(int opponentId) {
-		super(opponentId);
-		
+	private boolean increasePoint = false; 
+	@Override
+	public double specialAction() {
+		increasePoint = true;
+		return 1;
 	}
 	
-	@Override
-	public void specialAction() {
-		double pointAfterAbsorb = getAttack();
-		if(getPoints() + pointAfterAbsorb <= 150) {
-			 points += pointAfterAbsorb;
+	public int hitToAnyHuman(double damage , Human<? extends Weapon> human) {
+		if(increasePoint) {
+			points += damage;
+			pointControl();
+			increasePoint = false;
 		}
-		else {
-			pointAfterAbsorb = 150;
-			System.out.println("Your health limit is up to 150. So your new health setted to 150");
-		}
-		
-		
-		
+		return super.hitToAnyHuman(damage, human);
 	}
-	@Override
-	public String toString() {
-		return "Type: Slime [opponentId=" + opponentId + ", points=" + points + ", attack=" + attack + ", speed=" + speed
-				+ "]";
+	
+	private void pointControl() {
+		if(points > 150)
+			points = 150;
 	}
 
+	@Override
+	public String toString() {
+		return "Slime [" + super.toString() + "]";
+	}
+	
 }

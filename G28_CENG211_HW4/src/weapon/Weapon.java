@@ -2,25 +2,21 @@ package weapon;
 
 import java.util.Random;
 
-abstract public class Weapon{
-	int additionalAttack; // [10,20]
-	
-	
-	Random random = new Random();
-	
-	public Weapon() {
-		
-		additionalAttack = (1 + random.nextInt(20));
-	}
-	
-	public abstract double stab(int opponentAttackDamage);
-	public abstract double slash(int opponentAttackDamage);
+import utils.Utilities;
 
-	@Override
-	public String toString() {
-		return "Weapon [additionalAttack=" + additionalAttack + "]";
+abstract public class Weapon{
+private double additionalAttack;
+	
+	{
+		initAdditionalAttack();
+	}
+	private void initAdditionalAttack() {
+		additionalAttack = Utilities.inclusiveRandomValueCreator(10, 20);
 	}
 	
+	public double getAdditionalAttack() {
+		return additionalAttack;
+	}
 	
 	
 	

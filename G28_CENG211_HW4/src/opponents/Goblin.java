@@ -2,21 +2,23 @@ package opponents;
 
 public class Goblin extends Opponent{
 	
-	public Goblin(int opponentId) {
-		super(opponentId);
+	private boolean isGoblinWaitOneTour = false;
+	@Override
+	public double specialAction() {
+		return 0.7;
 		
 	}
 	
-	@Override
-	public void specialAction() {
-		// it gets next turn immediately and attacks two times and both attacks dealts newAttackForTwice
-		attack = 0.7 * attack;
-		
+	public boolean getIsGoblinWaitOneTour() {
+		return isGoblinWaitOneTour;
 	}
+	public void setIsGoblinWaitOneTour(boolean bool) {
+		isGoblinWaitOneTour = bool;
+	}
+
 	@Override
 	public String toString() {
-		return "Type: Goblin [opponentId=" + opponentId + ", points=" + points + ", attack=" + attack + ", speed=" + speed
-				+ "]";
+		return "Goblin [" + super.toString() + "]";
 	}
 	
 }

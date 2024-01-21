@@ -1,30 +1,27 @@
 package opponents;
 
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
+import opponents.Wolf;
 
 public class Wolf extends Opponent{
-	public Wolf(){
-		super();
-	}
-	public Wolf(int opponentId) {
-		super(opponentId);
-		
-	}
-	
 	@Override
-	public void specialAction() {
+	public double specialAction() { 
+		return 0;
+		
+	}
+	public Wolf() {
+		
+	}
+	public Wolf(Wolf wolf) {
+		speed = wolf.speed;
+		attackPoint = wolf.attackPoint;
+		points = wolf.points;
 	}
 	
-	public void specialAction(ArrayList<Opponent> opponentList) {
-		if(getRandom().nextInt(5) == 0) {
-			opponentList.add(new Wolf());
-		}
-		
+	public Wolf returnNewWolf() {
+		return new Wolf(this);
 	}
 	@Override
 	public String toString() {
-		return "Type: Wolf [opponentId=" + opponentId + ", points=" + points + ", attack=" + attack + ", speed=" + speed
-				+ "]";
+		return "Wolf [" + super.toString() + "]";
 	}
 }
